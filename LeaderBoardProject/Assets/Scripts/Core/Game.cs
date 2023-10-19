@@ -1,27 +1,70 @@
+using System;
 using System.Threading.Tasks;
+using Core.Configs;
 using Core.Interfaces;
+using UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace Core
 {
-    public class Game : ISceneLoader
+    public class Game : IScenesLoader, IGameInput
     {
-        private static UiController uiController;
-
         public Game()
         {
             Init();
         }
 
+        private GameMainData gameMainData;
+
+        private EventFunctionsGO eventFunctionsGO;
+        
+        private GameInput gameInput;
+
+        private MainMenuUiController mainMenuUiController;
+        private LeaderBoardUiController leaderBoardUiController;
+
+        private GameState gameState;
+
+        public GameInput GameInput => gameInput;
+
+
         private async void Init()
         {
-            var loader = Addressables.LoadAssetAsync<GameMainData>(GameConstants.MAIN_CONFIG_ID);
+            gameMainData = await Addressables.LoadAssetAsync<GameMainData>(GameConstants.MAIN_CONFIG_ID).Task;
 
-            await loader.Task;
+            var go = new GameObject("EventFunctionsGO");
+            Object.DontDestroyOnLoad(go);
+            eventFunctionsGO = go.AddComponent<EventFunctionsGO>();
+            eventFunctionsGO.OnUpdateGO += Update;
             
-            Debug.LogError(loader.Result.GetSceneId(GameState.LeaderBoardScene));
+            gameInput = new GameInput();
+
+            var mainMenuViewAsset = await gameMainData.GetUiView<MainMenuUiView>(GameState.MainMenuScene,
+                eventFunctionsGO.destroyCancellationToken);
+            
+            mainMenuUiController = new MainMenuUiController(this, this, mainMenuViewAsset);
+            await mainMenuUiController.Show();
+            
+            gameState = GameState.MainMenuScene;
+        }
+
+        private void Update()
+        {
+            switch (gameState)
+            {
+                case GameState.MainMenuScene:
+                    gameInput.Update();
+                    break;
+                
+                case GameState.LeaderBoardScene:
+                    break;
+                
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
 

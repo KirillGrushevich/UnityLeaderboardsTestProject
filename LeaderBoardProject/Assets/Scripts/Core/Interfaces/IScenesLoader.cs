@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
-    public interface ISceneLoader
+    public interface IScenesLoader
     {
         public Task LoadSceneAsyncAdditive(int sceneIndex);
 

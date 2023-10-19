@@ -1,6 +1,6 @@
 namespace UI
 {
-    public class LeaderBoardModel
+    public class LeaderBoardUiModel
     {
         
     }

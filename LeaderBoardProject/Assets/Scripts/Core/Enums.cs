@@ -2,7 +2,7 @@ namespace Core
 {
     public enum GameState
     {
-        LoadingScene,
+        MainMenuScene,
         LeaderBoardScene,
     }
 }

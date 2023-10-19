@@ -17,3 +17,10 @@ MonoBehaviour:
     sceneIndex: 0
   - gameState: 1
     sceneIndex: 1
+  uiViews:
+  - gameState: 0
+    viewAsset:
+      m_AssetGUID: 033370ac1ad7b43458d5509266ae0c90
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
