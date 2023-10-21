@@ -1,8 +1,8 @@
 namespace Core
 {
-    public enum GameState
+    public enum GameScreen
     {
-        MainMenuScene,
-        LeaderBoardScene,
+        MainMenuScreen,
+        LeaderBoardScreen,
     }
 }

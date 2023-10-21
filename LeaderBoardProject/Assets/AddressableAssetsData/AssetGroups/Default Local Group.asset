@@ -28,6 +28,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd61cef4d93d74328b7427adc07d9574
+    m_Address: Assets/Prefabs/UI/LeaderBoardCanvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: b15e60d21d82a4a3dac6df69c70883a2, type: 2}
   m_SchemaSet:

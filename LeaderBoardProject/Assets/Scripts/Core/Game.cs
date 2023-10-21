@@ -1,16 +1,17 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Configs;
 using Core.Interfaces;
 using UI;
+using UI.Interfaces;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
 namespace Core
 {
-    public class Game : IScenesLoader, IGameInput
+    public class Game : IScreenLoader
     {
         public Game()
         {
@@ -19,16 +20,16 @@ namespace Core
 
         private GameMainData gameMainData;
 
-        private EventFunctionsGO eventFunctionsGO;
+        private EventFunctionsGO eventFunctionsGo;
         
         private GameInput gameInput;
 
         private MainMenuUiController mainMenuUiController;
         private LeaderBoardUiController leaderBoardUiController;
 
-        private GameState gameState;
+        private GameScreen currentGameScreen;
 
-        public GameInput GameInput => gameInput;
+        private Dictionary<GameScreen, IUiController> uiControllers;
 
 
         private async void Init()
@@ -37,29 +38,34 @@ namespace Core
 
             var go = new GameObject("EventFunctionsGO");
             Object.DontDestroyOnLoad(go);
-            eventFunctionsGO = go.AddComponent<EventFunctionsGO>();
-            eventFunctionsGO.OnUpdateGO += Update;
+            eventFunctionsGo = go.AddComponent<EventFunctionsGO>();
+            eventFunctionsGo.OnUpdateGO += Update;
             
             gameInput = new GameInput();
 
-            var mainMenuViewAsset = await gameMainData.GetUiView<MainMenuUiView>(GameState.MainMenuScene,
-                eventFunctionsGO.destroyCancellationToken);
+            uiControllers = new Dictionary<GameScreen, IUiController>
+            {
+                {GameScreen.MainMenuScreen, new MainMenuUiController(
+                    gameInput, this, gameMainData, eventFunctionsGo.destroyCancellationToken)},
+                
+                {GameScreen.LeaderBoardScreen, new LeaderBoardUiController(
+                    gameInput, this, gameMainData, eventFunctionsGo.destroyCancellationToken)},
+            };
+
+            await LoadScreen(GameScreen.MainMenuScreen);
             
-            mainMenuUiController = new MainMenuUiController(this, this, mainMenuViewAsset);
-            await mainMenuUiController.Show();
-            
-            gameState = GameState.MainMenuScene;
+            currentGameScreen = GameScreen.MainMenuScreen;
         }
 
         private void Update()
         {
-            switch (gameState)
+            switch (currentGameScreen)
             {
-                case GameState.MainMenuScene:
+                case GameScreen.MainMenuScreen:
                     gameInput.Update();
                     break;
                 
-                case GameState.LeaderBoardScene:
+                case GameScreen.LeaderBoardScreen:
                     break;
                 
                 default:
@@ -67,25 +73,15 @@ namespace Core
             }
         }
 
-
-        public async Task LoadSceneAsyncAdditive(int sceneIndex)
+        public async Task LoadScreen(GameScreen gameScreen)
         {
-            var loader = SceneManager.LoadSceneAsync(sceneIndex, LoadSceneMode.Additive);
-
-            while (!loader.isDone)
+            if (!uiControllers.ContainsKey(gameScreen))
             {
-                await Task.Yield();
+                Debug.LogError($"Screen {gameScreen} is not found");
+                return;
             }
-        }
 
-        public async Task UnloadSceneAsync(int sceneIndex)
-        {
-            var loader = SceneManager.UnloadSceneAsync(sceneIndex);
-
-            while (!loader.isDone)
-            {
-                await Task.Yield();
-            }
+            await uiControllers[gameScreen].Show();
         }
     }
 }

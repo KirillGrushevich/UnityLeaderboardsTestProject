@@ -1,7 +1,9 @@
+using System;
+
 namespace Core.Interfaces
 {
     public interface IGameInput
     {
-        public GameInput GameInput { get; }
+        public event Action OnScreenTapped;
     }
 }
