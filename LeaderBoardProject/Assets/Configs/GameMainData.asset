@@ -25,3 +25,27 @@ MonoBehaviour:
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+  leaderBoardsAssets:
+  - {fileID: 4900000, guid: d16100bef5ea248e09bc31812c7ce3c2, type: 3}
+  - {fileID: 4900000, guid: 4929b10ee906144e28602cdde2ae1a7f, type: 3}
+  placeIcons:
+  - place: 1
+    sprite: {fileID: 21300000, guid: fca994ef6cfde4d0798a5e301f658472, type: 3}
+  - place: 2
+    sprite: {fileID: 21300000, guid: b1d893e2d1d214e06a94134663c26943, type: 3}
+  - place: 3
+    sprite: {fileID: 21300000, guid: d4c79a4c5b9a44349acbaf45cb1037e2, type: 3}
+  flags:
+  - {fileID: 21300000, guid: c87ffa606ab614e4b867fdf775d7bce1, type: 3}
+  - {fileID: 21300000, guid: 05fdf3f63b35f4f9a845aed938c27fec, type: 3}
+  - {fileID: 21300000, guid: b9bb83b35825d4e0ebe4e656d19a16a7, type: 3}
+  - {fileID: 21300000, guid: a086ec44aae2e489a8ef2564f01aa87c, type: 3}
+  - {fileID: 21300000, guid: 0b2e09f3d38e1496a9cda2ac6487d681, type: 3}
+  - {fileID: 21300000, guid: f508a58cd489240f2b48179fec02c064, type: 3}
+  - {fileID: 21300000, guid: fff4f43084ba24d499479d31945f73b4, type: 3}
+  portraits:
+  - {fileID: 21300000, guid: 86d4d21c1b4444a3f9c754661e202c48, type: 3}
+  - {fileID: 21300000, guid: e975887932df045c3b3605b8c8f54464, type: 3}
+  - {fileID: 21300000, guid: 2828e4075800345ceb8d7e3047a0d2f8, type: 3}
+  - {fileID: 21300000, guid: af25faf44e90b42eb849303cfac3cc2c, type: 3}
+  - {fileID: 21300000, guid: 996b808818bb142cbb9866cebc2f8b46, type: 3}

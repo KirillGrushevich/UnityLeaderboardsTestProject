@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace Data
 {
@@ -10,7 +9,7 @@ namespace Data
         public string username;
         public bool isVip;
         public string countryCode;
-        public Color characterColor;
+        public string characterColor;
         public uint characterIndex;
 
     }

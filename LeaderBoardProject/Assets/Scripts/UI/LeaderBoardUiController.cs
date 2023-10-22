@@ -44,10 +44,19 @@ namespace UI
             if (uiView == null)
             {
                 uiView = Object.Instantiate(uiViewAsset);
+
+                uiView.OnScreenClosed += OnScreenClosed;
             }
 
+            uiView.Setup(gameMainData.GetLeaderBoardData(), gameMainData);
+            
             //TODO - place animation here
             await Task.Delay(TimeSpan.FromSeconds(1f), cancellationToken);
+        }
+
+        private void OnScreenClosed()
+        {
+            screenLoader.LoadScreen(GameScreen.MainMenuScreen);
         }
     }
 }
